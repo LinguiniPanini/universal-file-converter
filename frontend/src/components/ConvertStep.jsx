@@ -465,12 +465,12 @@ export default function ConvertStep({ uploadResult, onConvertComplete }) {
           disabled={!selectedFormat || converting}
           whileTap={selectedFormat && !converting ? { scale: 0.95 } : {}}
           className={`
-            relative px-8 py-3 rounded-xl font-semibold text-sm
+            relative px-10 py-4 text-lg rounded-xl font-semibold
             transition-all duration-200
             ${convertDone
               ? 'bg-sage text-white'
               : selectedFormat
-                ? 'bg-gradient-to-r from-dusty-blue to-slate-blue text-white shimmer hover:shadow-lg hover:shadow-dusty-blue/30'
+                ? 'bg-gradient-to-r from-slate-blue via-dusty-blue to-mocha text-white shimmer hover:shadow-lg hover:shadow-dusty-blue/30 hover:-translate-y-0.5'
                 : 'bg-deep-navy/20 text-deep-navy/40 cursor-not-allowed'
             }
           `}

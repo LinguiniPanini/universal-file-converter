@@ -146,7 +146,7 @@ export default function StepIndicator({ currentStep }) {
                */}
               <motion.div
                 className={`
-                  w-12 h-12 rounded-full flex items-center justify-center
+                  w-14 h-14 rounded-full flex items-center justify-center
                   transition-colors duration-300
                   ${isCompleted
                     ? 'bg-sage text-white'
@@ -287,7 +287,7 @@ export default function StepIndicator({ currentStep }) {
             {index < STEPS.length - 1 && (
               <div className="w-10 sm:w-16 h-[2px] bg-white/30 mx-2 rounded-full overflow-hidden relative">
                 <motion.div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-dusty-blue to-sage rounded-full"
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-slate-blue via-dusty-blue to-sage rounded-full"
                   initial={{ width: '0%' }}
                   animate={{
                     width: index < currentStep ? '100%' : '0%',

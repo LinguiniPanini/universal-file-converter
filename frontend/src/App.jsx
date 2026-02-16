@@ -239,9 +239,14 @@ export default function App() {
            * y distinguido del texto normal (que usa Inter).
            */}
           <motion.h1
-            className="text-4xl font-bold text-deep-navy tracking-tight"
-            style={{ fontFamily: 'var(--font-display)' }}
-            whileHover={{ scale: 1.02 }}
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent"
+            style={{
+              fontFamily: 'var(--font-display)',
+              backgroundImage: 'linear-gradient(135deg, #4A5B6E, #8DA4BF, #A68B7B, #A8BBA8, #8DA4BF, #4A5B6E)',
+              backgroundSize: '300% 300%',
+              animation: 'gradient-shift 8s ease-in-out infinite',
+            }}
+            whileHover={{ scale: 1.03 }}
             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
           >
             Universal File Converter

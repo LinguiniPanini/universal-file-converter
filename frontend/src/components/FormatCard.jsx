@@ -135,7 +135,7 @@ export default function FormatCard({ label, value, description, icon: Icon, sele
     if (!cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
-    const maxTilt = 8;
+    const maxTilt = 12;
 
     // Posicion normalizada del cursor: -0.5 (borde izq/arriba) a 0.5 (borde der/abajo)
     const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -231,8 +231,8 @@ export default function FormatCard({ label, value, description, icon: Icon, sele
         relative overflow-hidden rounded-xl p-5 text-left w-full
         transition-all duration-200
         ${selected
-          ? 'glass border-2 border-dusty-blue shadow-lg shadow-dusty-blue/20'
-          : 'glass border border-transparent hover:shadow-md hover:shadow-mocha/10'
+          ? 'glass border-2 border-dusty-blue shadow-lg shadow-dusty-blue/40'
+          : 'glass border border-transparent hover:shadow-lg hover:shadow-dusty-blue/15 hover:border-dusty-blue/30'
         }
       `}
       style={{

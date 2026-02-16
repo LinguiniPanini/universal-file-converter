@@ -182,7 +182,7 @@
   --color-sage-light: #C5D6C5;
 
   /* --- Fuentes distintivas (cargadas via Google Fonts en index.html) --- */
-  --font-display: 'Instrument Serif', serif;
+  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -331,10 +331,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(168, 187, 168, 0.4);
+    box-shadow: 0 0 0 0 rgba(168, 187, 168, 0.5);
   }
   50% {
-    box-shadow: 0 0 0 12px rgba(168, 187, 168, 0);
+    box-shadow: 0 0 0 18px rgba(168, 187, 168, 0);
   }
 }
 
@@ -350,6 +350,31 @@
   }
   100% {
     --gradient-angle: 360deg;
+  }
+}
+
+/*
+ * ============================================================================
+ * Animacion del gradiente del titulo — desplaza los colores suavemente
+ * ============================================================================
+ *
+ * Mueve la posicion del gradiente en el texto del titulo para crear
+ * un efecto de colores que "fluyen" continuamente. backgroundSize: 300%
+ * permite que el gradiente se desplace mostrando diferentes secciones.
+ */
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  75% {
+    background-position: 0% 100%;
   }
 }
 

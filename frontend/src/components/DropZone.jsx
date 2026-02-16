@@ -96,6 +96,22 @@ const MAX_SIZE = 50 * 1024 * 1024;
 const FORMAT_BADGES = ['PNG', 'JPEG', 'WebP', 'PDF', 'DOCX', 'MD'];
 
 /**
+ * Mapa de colores pastel por formato para los badges.
+ *
+ * En vez de un color uniforme para todos los badges, cada formato
+ * tiene su propio fondo y color de texto para darle mas vida visual
+ * al DropZone y ayudar al usuario a distinguir formatos rapidamente.
+ */
+const FORMAT_COLORS = {
+  'PNG': 'bg-dusty-blue/20 text-slate-blue',
+  'JPEG': 'bg-mocha/15 text-mocha',
+  'WebP': 'bg-sage/20 text-sage',
+  'PDF': 'bg-soft-rose/20 text-soft-rose',
+  'DOCX': 'bg-latte/25 text-deep-navy/60',
+  'MD': 'bg-dusty-blue-light/30 text-slate-blue',
+};
+
+/**
  * DropZone — Componente de arrastrar y soltar con animaciones ricas
  *
  * Renderiza una zona interactiva donde el usuario puede arrastrar archivos
@@ -212,7 +228,7 @@ export default function DropZone({ onFileDrop, disabled = false, uploadComplete 
       ? 'pointer-events-none opacity-60'
       : isDragActive
         ? 'bg-dusty-blue/10 border-2 border-dusty-blue'
-        : 'glass border-2 border-dashed border-mocha-light/40 hover:border-mocha/60'
+        : 'glass border-2 border-dashed border-mocha/50 hover:border-mocha/60'
     }
   `;
 
@@ -424,8 +440,13 @@ export default function DropZone({ onFileDrop, disabled = false, uploadComplete 
              * y: -4 lo mueve 4px arriba, scale: 1.05 lo agranda un 5%.
              * Juntos crean un efecto de "flotacion" sutil.
              */}
-            <motion.div whileHover={{ y: -4, scale: 1.05 }}>
-              <CloudUpload className="w-14 h-14 text-mocha" />
+            {/* Animacion flotante sutil en idle + hover para mas movimiento */}
+            <motion.div
+              whileHover={{ y: -4, scale: 1.05 }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+            >
+              <CloudUpload className="w-14 h-14 text-slate-blue/50" />
             </motion.div>
 
             {/* Texto principal de instruccion */}
@@ -477,7 +498,7 @@ export default function DropZone({ onFileDrop, disabled = false, uploadComplete 
               {FORMAT_BADGES.map((format) => (
                 <motion.span
                   key={format}
-                  className="px-3 py-1 text-xs font-medium rounded-full bg-white/60 text-deep-navy/70 border border-white/40"
+                  className={`px-2.5 py-0.5 text-xs font-medium rounded-full border border-white/30 ${FORMAT_COLORS[format]}`}
                   whileHover={{ scale: 1.1, y: -2 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 >

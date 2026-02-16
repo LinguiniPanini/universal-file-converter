@@ -35,11 +35,11 @@
  * en los bordes de la ventana de forma limpia.
  *
  * --- Estructura de los blobs ---
- * Usamos 4 blobs con diferentes:
+ * Usamos 6 blobs con diferentes:
  * - Colores: alternando calidos (mocha, latte) y frios (dusty-blue)
  * - Tamanos: de 350px a 600px para variedad visual
  * - Velocidades: de 20s a 30s para que no se sincronicen
- * - Opacidades: de /20 a /35 para que sean sutiles, no dominantes
+ * - Opacidades: de /25 a /50 para mas presencia visual y color
  * - Posiciones: distribuidos en las esquinas y bordes de la pantalla
  *
  * La combinacion de estos parametros evita que el patron se vea repetitivo
@@ -55,7 +55,7 @@
  * Se debe colocar como primer hijo del contenedor raiz de la app para
  * que quede detras de todo el contenido gracias a z-[-1].
  *
- * @returns {JSX.Element} Contenedor fijo con 4 blobs animados
+ * @returns {JSX.Element} Contenedor fijo con 6 blobs animados
  */
 export default function AnimatedBackground() {
   return (
@@ -81,14 +81,14 @@ export default function AnimatedBackground() {
        * -5% left) hace que solo una parte sea visible, como si emergiera
        * desde fuera de la pantalla.
        *
-       * - 500x500px: tamano mediano, presente pero no dominante
-       * - mocha/30: opacidad del 30%, suficiente para notar el color
+       * - 550x550px: tamano mediano-grande, mas presencia visual
+       * - mocha/40: opacidad del 40%, mas visible para mas color
        * - blur(80px): difuminado alto para bordes suaves
        * - blob-1 25s: usa la primera trayectoria, ciclo de 25 segundos
        * - rounded-full: base circular antes de que la animacion deforme los bordes
        */}
       <div
-        className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-mocha/30 rounded-full"
+        className="absolute top-[-10%] left-[-5%] w-[550px] h-[550px] bg-mocha/40 rounded-full"
         style={{
           filter: 'blur(80px)',
           animation: 'blob-1 25s ease-in-out infinite',
@@ -104,14 +104,14 @@ export default function AnimatedBackground() {
        * del blob 1 con un tono azul pastel. La posicion right: -10% lo
        * saca parcialmente de la pantalla, creando un efecto de profundidad.
        *
-       * - 400x400px: mas pequeno que blob 1 para variedad
-       * - dusty-blue/35: un poco mas opaco para compensar su menor tamano
+       * - 450x450px: tamano medio, mas presencia visual
+       * - dusty-blue/50: opacidad alta para mas color y vivacidad
        * - blur(80px): mismo nivel de difuminado que blob 1
        * - blob-2 20s: segunda trayectoria, ciclo mas rapido (20s vs 25s)
        *   para que los blobs no se muevan en sincronía
        */}
       <div
-        className="absolute top-[10%] right-[-10%] w-[400px] h-[400px] bg-dusty-blue/35 rounded-full"
+        className="absolute top-[10%] right-[-10%] w-[450px] h-[450px] bg-dusty-blue/50 rounded-full"
         style={{
           filter: 'blur(80px)',
           animation: 'blob-2 20s ease-in-out infinite',
@@ -128,13 +128,13 @@ export default function AnimatedBackground() {
        * que soporta visualmente la parte baja de la pantalla.
        *
        * - 600x600px: el mas grande, cubre mas area
-       * - latte/25: opacidad baja (25%) porque su gran tamano compensa
+       * - latte/40: opacidad mas alta para mas presencia de color
        * - blur(100px): el blur mas alto, lo hace ultra-suave y difuso
        * - blob-3 30s: tercera trayectoria, el ciclo mas lento (30s)
        *   para que se sienta pesado y majestuoso, como una nube grande
        */}
       <div
-        className="absolute bottom-[-15%] left-[20%] w-[600px] h-[600px] bg-latte/25 rounded-full"
+        className="absolute bottom-[-15%] left-[20%] w-[600px] h-[600px] bg-latte/40 rounded-full"
         style={{
           filter: 'blur(100px)',
           animation: 'blob-3 30s ease-in-out infinite',
@@ -151,7 +151,7 @@ export default function AnimatedBackground() {
        * que el centro-izquierda de la pantalla se vea vacio.
        *
        * - 350x350px: el mas pequeno de todos
-       * - dusty-blue-light/20: la opacidad mas baja, casi fantasmal
+       * - dusty-blue-light/35: opacidad mas alta para mayor presencia
        * - blur(70px): blur menor porque su tamano pequeno no necesita tanto
        * - blob-2 22s reverse: REUTILIZA la trayectoria de blob-2 pero:
        *   a) Con duracion diferente (22s vs 20s) para desincronizar
@@ -160,10 +160,54 @@ export default function AnimatedBackground() {
        *   sin necesidad de definir mas @keyframes en CSS.
        */}
       <div
-        className="absolute top-[50%] left-[-5%] w-[350px] h-[350px] bg-dusty-blue-light/20 rounded-full"
+        className="absolute top-[50%] left-[-5%] w-[350px] h-[350px] bg-dusty-blue-light/35 rounded-full"
         style={{
           filter: 'blur(70px)',
           animation: 'blob-2 22s ease-in-out infinite reverse',
+        }}
+      />
+
+      {/*
+       * ====================================================================
+       * Blob 5 — Soft Rose (acento rosa calido)
+       * ====================================================================
+       *
+       * Posicionado en el centro-derecha. Agrega un toque de rosa calido
+       * que complementa los tonos azules y marrones, aportando mas variedad
+       * cromatica al fondo para una experiencia visual mas rica.
+       *
+       * - 400x400px: tamano medio
+       * - soft-rose/30: opacidad moderada, visible pero no dominante
+       * - blur(90px): difuminado alto para mezcla suave con otros blobs
+       * - blob-1 28s reverse: reutiliza blob-1 en reversa con ciclo de 28s
+       */}
+      <div
+        className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-soft-rose/30 rounded-full"
+        style={{
+          filter: 'blur(90px)',
+          animation: 'blob-1 28s ease-in-out infinite reverse',
+        }}
+      />
+
+      {/*
+       * ====================================================================
+       * Blob 6 — Sage (acento verde suave)
+       * ====================================================================
+       *
+       * Posicionado en la esquina inferior derecha. El verde sage equilibra
+       * la paleta agregando frescura natural. Complementa el rosa del blob 5
+       * creando un contraste calido-frio mas dinamico.
+       *
+       * - 350x350px: tamano compacto
+       * - sage/25: opacidad sutil, aporta color sin saturar
+       * - blur(75px): difuminado medio para bordes suaves
+       * - blob-3 24s: trayectoria de blob-3 con ciclo de 24s
+       */}
+      <div
+        className="absolute bottom-[10%] right-[-5%] w-[350px] h-[350px] bg-sage/25 rounded-full"
+        style={{
+          filter: 'blur(75px)',
+          animation: 'blob-3 24s ease-in-out infinite',
         }}
       />
 

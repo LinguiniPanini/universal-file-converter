@@ -93,7 +93,7 @@ const CONFETTI_COLORS = ['#B8C5D6', '#A68B7B', '#C4AD9D', '#A8BBA8', '#D4B5B0', 
  * @param {number} count - Cantidad de particulas a generar (default: 20)
  * @returns {Array<Object>} Array de configuraciones de particulas
  */
-function generateConfetti(count = 20) {
+function generateConfetti(count = 35) {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
@@ -568,7 +568,7 @@ export default function DownloadStep({ uploadResult, onReset }) {
           animate={{ x: btnOffset.x, y: btnOffset.y }}
           transition={{ type: 'spring', stiffness: 200, damping: 15 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-sage to-dusty-blue hover:shadow-xl transition-shadow"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-sage via-dusty-blue to-slate-blue hover:shadow-xl transition-shadow"
           style={{ animation: 'pulse-glow 2s ease-in-out infinite' }}
         >
           <Download className="w-5 h-5" />
