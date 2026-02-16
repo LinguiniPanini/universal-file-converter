@@ -1,14 +1,26 @@
 # Universal File Converter — Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+> **Status:** COMPLETED (2026-02-16). All 18 tasks implemented, code reviewed, and deployed to AWS EC2.
 
 **Goal:** Build a web app that converts files between image formats (PNG/JPEG/WebP) and document formats (PDF/DOCX/Markdown), deployed on AWS EC2 with S3 storage.
 
 **Architecture:** Python FastAPI backend handles uploads, validation, and conversion. React frontend provides drag-and-drop UI. Nginx serves the React build and proxies API calls to FastAPI. All files flow through EC2 to/from S3. Single S3 bucket with lifecycle policy for auto-cleanup.
 
-**Tech Stack:** FastAPI, Pillow, LibreOffice headless, WeasyPrint, pdf2docx, pdfplumber, python-magic, boto3, React, Vite, Tailwind CSS, Axios, react-dropzone, Nginx.
+**Tech Stack:** FastAPI, Pillow, LibreOffice headless, WeasyPrint, pdfplumber, python-magic, boto3, React, Vite, Tailwind CSS, Axios, react-dropzone, Nginx.
 
 **Design Doc:** `docs/plans/2026-02-15-universal-file-converter-design.md`
+
+### Post-Implementation Changes
+- `pdf2docx` removed from requirements (PDF->DOCX not implemented in V1)
+- `app/limiter.py` created to avoid circular imports between `main.py` and routes
+- CORS changed from `allow_origins=["*"]` to configurable `CORS_ORIGINS` env var
+- S3Service uses module-level singleton instead of per-route instances
+- Upload route sanitizes filenames with `os.path.basename()`
+- Convert route reads MIME from S3 metadata instead of re-detecting
+- Download/convert routes validate job_id as UUID format
+- Upload route caps reads at `MAX_FILE_SIZE + 1` for early rejection
+- Deploy scripts added: `deploy/01-setup-aws.sh` + `deploy/02-setup-server.sh`
+- Extensive educational comments added to all source files (in Spanish)
 
 ---
 

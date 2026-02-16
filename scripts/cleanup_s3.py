@@ -67,10 +67,14 @@ import boto3
 # timedelta: para definir la edad maxima permitida.
 from datetime import datetime, timezone, timedelta
 
-# Nombre del bucket (hardcodeado porque este script es independiente
-# de la configuracion de la app). En un proyecto mas robusto, esto
-# vendria de una variable de entorno o argumento de linea de comandos.
-BUCKET = "file-converter-bucket"
+# os: para leer la variable de entorno S3_BUCKET.
+import os
+
+# Nombre del bucket leido de la variable de entorno S3_BUCKET.
+# El cron job en deploy/02-setup-server.sh pasa esta variable asi:
+#   S3_BUCKET=mi-bucket python scripts/cleanup_s3.py
+# Si no esta definida, usa el valor por defecto para desarrollo local.
+BUCKET = os.getenv("S3_BUCKET", "file-converter-bucket")
 
 # Edad maxima de un objeto antes de ser eliminado: 1 hora.
 # Usamos timedelta para representar duraciones de forma legible.
