@@ -105,27 +105,33 @@ if [ "${SG_ID}" = "None" ] || [ -z "${SG_ID}" ]; then
         --query 'GroupId' \
         --output text)
 
-    # Regla: permitir SSH (puerto 22) desde cualquier IP
-    # En producción real, limitarías esto a TU IP: --cidr "tu.ip/32"
-    aws ec2 authorize-security-group-ingress \
-        --group-id "${SG_ID}" \
-        --protocol tcp \
-        --port 22 \
-        --cidr "0.0.0.0/0" \
-        --region "${REGION}"
-
-    # Regla: permitir HTTP (puerto 80) desde cualquier IP
-    aws ec2 authorize-security-group-ingress \
-        --group-id "${SG_ID}" \
-        --protocol tcp \
-        --port 80 \
-        --cidr "0.0.0.0/0" \
-        --region "${REGION}"
-
     echo "  → Security Group creado: ${SG_ID}"
 else
     echo "  → Security Group ya existe: ${SG_ID}"
 fi
+
+# Asegurar que las reglas de ingreso existen (idempotente).
+# Usamos 2>/dev/null porque authorize falla si la regla ya existe,
+# y eso está bien — solo queremos garantizar que esté presente.
+
+# Regla: permitir SSH (puerto 22) desde cualquier IP
+# En producción real, limitarías esto a TU IP: --cidr "tu.ip/32"
+aws ec2 authorize-security-group-ingress \
+    --group-id "${SG_ID}" \
+    --protocol tcp \
+    --port 22 \
+    --cidr "0.0.0.0/0" \
+    --region "${REGION}" 2>/dev/null || true
+
+# Regla: permitir HTTP (puerto 80) desde cualquier IP
+aws ec2 authorize-security-group-ingress \
+    --group-id "${SG_ID}" \
+    --protocol tcp \
+    --port 80 \
+    --cidr "0.0.0.0/0" \
+    --region "${REGION}" 2>/dev/null || true
+
+echo "  → Reglas de ingreso verificadas (SSH:22, HTTP:80)."
 
 # -----------------------------------------------------------------------------
 # PASO 3: Crear IAM Role (permisos para el EC2)
