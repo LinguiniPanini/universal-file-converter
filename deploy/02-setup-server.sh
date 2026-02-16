@@ -133,6 +133,12 @@ npm run build
 mkdir -p /var/www/file-converter
 cp -r dist/* /var/www/file-converter/
 
+# Restaurar permisos del directorio frontend al usuario ubuntu.
+# Como este script corre con sudo (root), npm install y npm run build
+# crean archivos con dueño root. Esto causa errores de permisos si
+# después se ejecuta "git pull" o "npm run build" como usuario ubuntu.
+chown -R ubuntu:ubuntu "${PROJECT_DIR}/frontend"
+
 echo "  → Frontend desplegado en: /var/www/file-converter/"
 
 # -----------------------------------------------------------------------------
