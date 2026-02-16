@@ -1,0 +1,46 @@
+# =============================================================================
+# .gitignore — Archivos que Git debe ignorar
+# =============================================================================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+*.so
+
+# Entorno virtual (cada desarrollador crea el suyo)
+backend/venv/
+
+# Cache de pytest
+.pytest_cache/
+
+# ---------- Node.js ----------
+node_modules/
+
+# Build del frontend (se regenera con npm run build)
+frontend/dist/
+
+# ---------- Deploy / Credenciales ----------
+# NUNCA commitear llaves privadas ni archivos con credenciales
+*.pem
+deploy/.env.deploy
+
+# ---------- IDE / Editor ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------- Sistema ----------
+.DS_Store
+Thumbs.db
+
+# ---------- Logs ----------
+*.log
+
+# ---------- Claude Code ----------
+.claude/
