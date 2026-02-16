@@ -40,6 +40,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
 
 /**
  * `defineConfig()` es un helper de Vite que provee autocompletado e inferencia
@@ -67,6 +68,28 @@ export default defineConfig({
    * En produccion, el CSS generado es minimo (~10KB vs 3MB+ del CSS completo).
    */
   plugins: [react(), tailwindcss()],
+
+  /**
+   * --- Alias de importacion ---
+   * Configuramos "@" como alias para la carpeta "src/". Esto nos permite
+   * importar componentes con rutas absolutas en lugar de relativas:
+   *
+   *   import { Button } from "@/components/ui/button"   // Con alias (limpio)
+   *   import { Button } from "../../components/ui/button" // Sin alias (fragil)
+   *
+   * Las rutas relativas ("../../") son fragiles porque se rompen cuando
+   * movemos archivos de carpeta. El alias "@/" siempre apunta a "src/"
+   * sin importar donde este el archivo que importa.
+   *
+   * Este alias tambien esta definido en jsconfig.json para que el IDE
+   * (VSCode) entienda la resolucion de rutas y ofrezca autocompletado.
+   * shadcn/ui requiere este alias para funcionar correctamente.
+   */
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 
   /**
    * --- Configuracion del servidor de desarrollo ---

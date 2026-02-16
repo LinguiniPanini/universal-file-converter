@@ -1,1 +1,431 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * ============================================================================
+ * Variante para modo oscuro (requerida por shadcn/ui)
+ * ============================================================================
+ *
+ * shadcn/ui usa la clase .dark en el HTML para activar el modo oscuro.
+ * Esta linea le dice a Tailwind que las variantes `dark:` apliquen cuando
+ * el elemento esta dentro de un contenedor con clase .dark.
+ *
+ * Nota: En este proyecto solo usamos modo claro con nuestra paleta pastel,
+ * pero dejamos la configuracion por si se quiere agregar dark mode despues.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ============================================================================
+ * Variables de shadcn/ui — Sistema de colores semanticos
+ * ============================================================================
+ *
+ * shadcn/ui usa un sistema de "color semantico" donde cada variable tiene
+ * un proposito especifico (background, foreground, primary, etc.).
+ * Esto permite cambiar toda la paleta de la app modificando estas variables.
+ *
+ * Los colores usan formato oklch() que es mas perceptualmente uniforme
+ * que hex o hsl — los cambios de luminosidad se ven mas naturales.
+ *
+ * El bloque @theme inline le dice a Tailwind v4 que registre estas
+ * variables como colores y radios utilizables en clases de utilidad.
+ * Asi podemos usar clases como "bg-primary", "text-muted-foreground", etc.
+ */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/*
+ * ============================================================================
+ * Tema personalizado — Paleta pastel cafe/azul
+ * ============================================================================
+ *
+ * Definimos colores como CSS custom properties para usarlos tanto en Tailwind
+ * (via @theme) como en CSS vanilla (para los blobs animados).
+ *
+ * La paleta combina tonos calidos (sand, mocha, latte) con tonos frios
+ * (dusty-blue, slate-blue, deep-navy) para crear una sensacion premium
+ * y acogedora. Todos los colores son de baja saturacion (pastel).
+ */
+
+@theme {
+  /* --- Colores principales de la paleta --- */
+  --color-sand: #E8DDD3;
+  --color-warm-cream: #F5F0EB;
+  --color-dusty-blue: #B8C5D6;
+  --color-slate-blue: #8DA4BF;
+  --color-deep-navy: #4A5B6E;
+  --color-mocha: #A68B7B;
+  --color-latte: #C4AD9D;
+  --color-soft-rose: #D4B5B0;
+  --color-sage: #A8BBA8;
+
+  /* --- Variantes claras para fondos y bordes sutiles --- */
+  --color-dusty-blue-light: #D4DEE9;
+  --color-mocha-light: #C4B5A8;
+  --color-sage-light: #C5D6C5;
+
+  /* --- Fuentes distintivas (cargadas via Google Fonts en index.html) --- */
+  --font-display: 'Instrument Serif', serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * ============================================================================
+ * Animaciones de los Blobs del fondo
+ * ============================================================================
+ *
+ * Cada blob tiene su propia trayectoria (translate) y deformacion
+ * (border-radius) para que el movimiento se vea organico, no mecanico.
+ * Los timings son largos (20-30s) y usan ease-in-out para suavidad.
+ *
+ * --- Por que CSS puro y no Framer Motion para los blobs? ---
+ * Las animaciones del fondo corren infinitamente y no necesitan interaccion.
+ * CSS @keyframes se ejecuta en el compositor del navegador (GPU), lo cual
+ * es mucho mas eficiente que JavaScript. Framer Motion lo reservamos para
+ * animaciones interactivas que responden a eventos del usuario.
+ */
+
+@keyframes blob-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+  }
+  25% {
+    transform: translate(80px, -60px) scale(1.1);
+    border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%;
+  }
+  50% {
+    transform: translate(-40px, 80px) scale(0.95);
+    border-radius: 60% 40% 50% 50% / 50% 50% 60% 40%;
+  }
+  75% {
+    transform: translate(60px, 40px) scale(1.05);
+    border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+  }
+}
+
+@keyframes blob-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    border-radius: 60% 40% 40% 60% / 40% 60% 40% 60%;
+  }
+  33% {
+    transform: translate(-70px, 50px) scale(1.08);
+    border-radius: 50% 50% 60% 40% / 50% 40% 60% 50%;
+  }
+  66% {
+    transform: translate(50px, -80px) scale(0.92);
+    border-radius: 40% 60% 50% 50% / 60% 50% 40% 50%;
+  }
+}
+
+@keyframes blob-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  }
+  20% {
+    transform: translate(60px, 70px) scale(1.12);
+    border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
+  }
+  40% {
+    transform: translate(-50px, -30px) scale(0.9);
+    border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+  }
+  60% {
+    transform: translate(30px, -60px) scale(1.05);
+    border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%;
+  }
+  80% {
+    transform: translate(-40px, 40px) scale(0.97);
+    border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%;
+  }
+}
+
+/*
+ * ============================================================================
+ * Animacion del shimmer (brillo que recorre botones)
+ * ============================================================================
+ */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/*
+ * ============================================================================
+ * Animacion del borde que "respira" en el DropZone
+ * ============================================================================
+ */
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.008);
+  }
+}
+
+/*
+ * ============================================================================
+ * Animacion de ondas (water ripple) al soltar archivo
+ * ============================================================================
+ */
+
+@keyframes ripple-wave {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/*
+ * ============================================================================
+ * Particulas de celebracion en el paso de descarga
+ * ============================================================================
+ */
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(300px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/*
+ * ============================================================================
+ * Pulso magnetico del boton de descarga
+ * ============================================================================
+ */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(168, 187, 168, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(168, 187, 168, 0);
+  }
+}
+
+/*
+ * ============================================================================
+ * Rotacion del borde gradiente (para cards seleccionadas)
+ * ============================================================================
+ */
+
+@keyframes rotate-gradient {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+/*
+ * ============================================================================
+ * Estilos base del body
+ * ============================================================================
+ *
+ * Sobreescribimos los estilos base de shadcn para aplicar nuestra paleta
+ * personalizada. El gradiente va de sand -> dusty-blue-light -> sand para
+ * crear un fondo calido con un toque frio en el centro.
+ *
+ * color: deep-navy es el color de texto principal de nuestra paleta.
+ * font-family: Plus Jakarta Sans como tipografia de cuerpo.
+ */
+
+body {
+  background: linear-gradient(135deg, #E8DDD3 0%, #D4DEE9 50%, #E8DDD3 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #4A5B6E;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * ============================================================================
+ * Clase utilitaria: glassmorphism
+ * ============================================================================
+ *
+ * Efecto "vidrio esmerilado" que se popularizo con iOS y macOS.
+ * Combina:
+ * - Fondo semi-transparente (rgba)
+ * - Blur del fondo (backdrop-filter)
+ * - Borde semi-transparente para definir bordes
+ * - Sombra con color de la paleta para profundidad
+ *
+ * Se usa en cards, paneles y contenedores principales para dar
+ * profundidad visual sin opacar el fondo animado con blobs.
+ */
+
+.glass {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px rgba(168, 139, 123, 0.1);
+}
+
+/*
+ * ============================================================================
+ * Clase utilitaria: shimmer en botones
+ * ============================================================================
+ *
+ * Agrega un brillo animado que recorre el boton horizontalmente.
+ * Se usa con la clase .shimmer en elementos con overflow: hidden.
+ * El pseudo-elemento ::after crea una franja de luz semi-transparente
+ * que se desplaza de izquierda a derecha continuamente.
+ */
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.5s ease-in-out infinite;
+}
