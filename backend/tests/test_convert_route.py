@@ -18,6 +18,7 @@ def test_convert_png_to_jpeg(mock_s3):
     mock_s3.client.list_objects_v2.return_value = {
         "Contents": [{"Key": f"uploads/{VALID_UUID}/sample.png"}]
     }
+    mock_s3.get_metadata.return_value = {"mime-type": "image/png"}
     mock_s3.upload_converted.return_value = f"converted/{VALID_UUID}/converted.jpg"
 
     response = client.post("/api/convert", json={
@@ -37,6 +38,7 @@ def test_convert_markdown_to_pdf(mock_s3):
     mock_s3.client.list_objects_v2.return_value = {
         "Contents": [{"Key": f"uploads/{VALID_UUID}/sample.md"}]
     }
+    mock_s3.get_metadata.return_value = {"mime-type": "text/markdown"}
     mock_s3.upload_converted.return_value = f"converted/{VALID_UUID}/converted.pdf"
 
     response = client.post("/api/convert", json={

@@ -31,7 +31,7 @@ async def upload_file(request: Request, file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=result.error)
 
     job_id = str(uuid.uuid4())
-    s3_service.upload(data, job_id, safe_filename)
+    s3_service.upload(data, job_id, safe_filename, metadata={"mime-type": result.mime_type})
 
     return UploadResponse(
         job_id=job_id,

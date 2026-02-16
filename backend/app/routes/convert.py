@@ -1,7 +1,8 @@
 import re
 
-import magic
+import magic  # fallback only
 from fastapi import APIRouter, HTTPException
+
 from starlette.requests import Request
 
 from app.limiter import limiter
@@ -65,7 +66,11 @@ async def convert_file(request: Request, req: ConvertRequest):
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"File not found: {e}")
 
-    source_mime = magic.from_buffer(data, mime=True)
+    metadata = s3_service.get_metadata(file_key)
+    source_mime = metadata.get("mime-type")
+    if not source_mime:
+        # Fallback to magic detection if metadata is missing
+        source_mime = magic.from_buffer(data, mime=True)
     target_mime = req.target_format
     options = req.options
 

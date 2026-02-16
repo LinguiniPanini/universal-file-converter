@@ -32,6 +32,10 @@ def test_webp_to_png():
 def test_compress_image():
     data = (FIXTURES / "sample.png").read_bytes()
     result = compress_image(data, quality=30)
+    # Verify output is valid JPEG
+    img = Image.open(io.BytesIO(result))
+    assert img.format == "JPEG"
+    # Verify output is non-empty
     assert len(result) > 0
 
 

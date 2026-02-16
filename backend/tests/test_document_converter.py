@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 import pytest
@@ -22,3 +23,14 @@ def test_pdf_to_markdown():
     result = pdf_to_markdown(pdf_data)
     assert isinstance(result, bytes)
     assert len(result) > 0
+
+
+@pytest.mark.skipif(
+    shutil.which("libreoffice") is None,
+    reason="LibreOffice not installed"
+)
+def test_docx_to_pdf():
+    from app.services.document_converter import docx_to_pdf
+    data = (FIXTURES / "sample.docx").read_bytes()
+    result = docx_to_pdf(data)
+    assert result[:5] == b"%PDF-"
