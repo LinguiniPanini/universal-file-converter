@@ -13,12 +13,36 @@
 - Backend dev server: `cd backend && source venv/bin/activate && uvicorn app.main:app --reload`
 - Frontend dev server: `cd frontend && npm run dev`
 
+## Environment Variables
+- `S3_BUCKET` — S3 bucket name (default: `file-converter-bucket`)
+- `AWS_REGION` — AWS region (default: `us-east-1`)
+- `CORS_ORIGINS` — Comma-separated allowed origins (default: `http://localhost:5173`)
+
+## System Dependencies (EC2/Linux)
+- `libreoffice-writer` — DOCX→PDF conversion (headless)
+- `libmagic1` — MIME type detection via python-magic
+- `nginx` — Reverse proxy
+
 ## Architecture
 - API routes: `backend/app/routes/` (upload, convert, download)
 - Services: `backend/app/services/` (validator, s3, image_converter, document_converter)
 - S3 singleton: import `s3_service` from `app.services.s3`, don't create new instances
 - Rate limiter: import `limiter` from `app.limiter` (separate module to avoid circular imports)
 - CORS: configured via `CORS_ORIGINS` env var, never use `"*"`
+
+## Key Files
+- `backend/app/main.py` — FastAPI app entry point, router registration, CORS/rate-limit setup
+- `backend/app/config.py` — Settings class with S3, file size, MIME type config
+- `backend/app/limiter.py` — Shared rate limiter instance
+- `frontend/src/App.jsx` — React root, wires FileUploader → ConversionPanel
+- `frontend/vite.config.js` — Dev proxy (`/api` → `localhost:8000`)
+
+## Code Style
+- This is an educational project — comment code extensively so it serves as learning material
+- Explain the "why" behind decisions, not just the "what"
+- Backend: Python, FastAPI. Routes return Pydantic `response_model`, raise `HTTPException` for errors
+- Services are pure functions (image_converter, document_converter) or singleton classes (S3Service)
+- Frontend: functional components with hooks, Tailwind utility classes, no CSS modules
 
 ## Testing
 - S3 tests use `moto` mock (`@mock_aws` + `s3_client` fixture in `conftest.py`)
