@@ -28,3 +28,6 @@ class S3Service:
     def delete(self, key: str) -> None:
         """Delete file from S3."""
         self.client.delete_object(Bucket=self.bucket, Key=key)
+
+
+s3_service = S3Service()

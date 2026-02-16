@@ -64,14 +64,15 @@ def pdf_to_markdown(data: bytes) -> bytes:
         f.flush()
         tmp_path = f.name
 
-    lines = []
-    with pdfplumber.open(tmp_path) as pdf:
-        for i, page in enumerate(pdf.pages):
-            text = page.extract_text()
-            if text:
-                if i > 0:
-                    lines.append("\n---\n")
-                lines.append(text)
-
-    Path(tmp_path).unlink(missing_ok=True)
-    return "\n\n".join(lines).encode("utf-8")
+    try:
+        lines = []
+        with pdfplumber.open(tmp_path) as pdf:
+            for i, page in enumerate(pdf.pages):
+                text = page.extract_text()
+                if text:
+                    if i > 0:
+                        lines.append("\n---\n")
+                    lines.append(text)
+        return "\n\n".join(lines).encode("utf-8")
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)

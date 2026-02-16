@@ -1,6 +1,10 @@
+import re
+
 import magic
 from fastapi import APIRouter, HTTPException
+from starlette.requests import Request
 
+from app.limiter import limiter
 from app.models.schemas import ConvertRequest, ConvertResponse
 from app.services.image_converter import (
     MIME_TO_EXT,
@@ -14,10 +18,13 @@ from app.services.document_converter import (
     markdown_to_pdf,
     pdf_to_markdown,
 )
-from app.services.s3 import S3Service
+from app.services.s3 import s3_service
 
 router = APIRouter()
-s3_service = S3Service()
+
+UUID_PATTERN = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+)
 
 IMAGE_MIMES = {"image/png", "image/jpeg", "image/webp"}
 DOC_MIMES = {
@@ -37,7 +44,11 @@ TARGET_EXTENSIONS = {
 
 
 @router.post("/api/convert", response_model=ConvertResponse)
-async def convert_file(req: ConvertRequest):
+@limiter.limit("10/minute")
+async def convert_file(request: Request, req: ConvertRequest):
+    if not UUID_PATTERN.match(req.job_id):
+        raise HTTPException(status_code=400, detail="Invalid job ID format")
+
     # Download original from S3
     try:
         key = f"uploads/{req.job_id}/"

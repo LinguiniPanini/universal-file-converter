@@ -1,14 +1,22 @@
+import re
+
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
 
-from app.services.s3 import S3Service
+from app.services.s3 import s3_service
 
 router = APIRouter()
-s3_service = S3Service()
+
+UUID_PATTERN = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+)
 
 
 @router.get("/api/download/{job_id}")
 async def download_file(job_id: str):
+    if not UUID_PATTERN.match(job_id):
+        raise HTTPException(status_code=400, detail="Invalid job ID format")
+
     try:
         key_prefix = f"converted/{job_id}/"
         objects = s3_service.client.list_objects_v2(
