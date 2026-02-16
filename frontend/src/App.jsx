@@ -287,7 +287,7 @@ export default function App() {
          * type: 'spring' da un efecto de rebote suave al aparecer.
          */}
         <motion.div
-          className="glass rounded-2xl p-8 w-full max-w-lg"
+          className="glass rounded-2xl p-5 sm:p-8 w-full max-w-lg"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 25 }}

@@ -412,7 +412,7 @@ export default function ConvertStep({ uploadResult, onConvertComplete }) {
        * elementos pequeños. Un spring suave (stiffness baja) las haria
        * sentir "flotantes" y lentas.
        */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {options.map((option, index) => (
           <motion.div
             key={option.value}

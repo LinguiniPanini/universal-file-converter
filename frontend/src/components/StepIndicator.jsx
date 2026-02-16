@@ -285,7 +285,7 @@ export default function StepIndicator({ currentStep }) {
              * "crezca" de izquierda a derecha dentro del track.
              */}
             {index < STEPS.length - 1 && (
-              <div className="w-16 h-[2px] bg-white/30 mx-2 rounded-full overflow-hidden relative">
+              <div className="w-10 sm:w-16 h-[2px] bg-white/30 mx-2 rounded-full overflow-hidden relative">
                 <motion.div
                   className="absolute inset-y-0 left-0 bg-gradient-to-r from-dusty-blue to-sage rounded-full"
                   initial={{ width: '0%' }}

@@ -207,7 +207,7 @@ export default function DropZone({ onFileDrop, disabled = false, uploadComplete 
    * su propio feedback) o cuando esta deshabilitado (no puede recibir nada).
    */
   const containerClasses = `
-    rounded-2xl p-16 text-center cursor-pointer overflow-hidden relative
+    rounded-2xl p-10 sm:p-16 text-center cursor-pointer overflow-hidden relative
     ${disabled
       ? 'pointer-events-none opacity-60'
       : isDragActive
