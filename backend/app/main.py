@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.upload import router as upload_router
+from app.routes.convert import router as convert_router
 
 app = FastAPI(title="Universal File Converter")
 
@@ -19,3 +20,4 @@ async def health_check():
 
 
 app.include_router(upload_router)
+app.include_router(convert_router)
