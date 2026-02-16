@@ -244,7 +244,10 @@ echo "[6/6] Configurando cron de limpieza S3..."
 CRON_CMD="*/15 * * * * S3_BUCKET=${S3_BUCKET} ${PROJECT_DIR}/backend/venv/bin/python ${PROJECT_DIR}/scripts/cleanup_s3.py >> /var/log/file-converter-cleanup.log 2>&1"
 
 # Agregar al crontab del usuario ubuntu (sin duplicar si ya existe)
-(crontab -u ubuntu -l 2>/dev/null | grep -v "cleanup_s3.py"; echo "${CRON_CMD}") | crontab -u ubuntu -
+# Nota: { grep ... || true; } evita que grep retorne exit code 1 cuando
+# no hay líneas que procesar (crontab vacío), lo cual con pipefail
+# causaría que el script entero falle.
+(crontab -u ubuntu -l 2>/dev/null | { grep -v "cleanup_s3.py" || true; }; echo "${CRON_CMD}") | crontab -u ubuntu -
 
 echo "  → Cron configurado: limpieza cada 15 minutos."
 
